@@ -12,24 +12,22 @@ namespace IncreasingOrderSearchTree {
 
     public class Solution {
         public TreeNode IncreasingBST(TreeNode root) {
+            //use inorder traversal to store in a list
+            //loop through the list and make the node a right child of the previous and left null
+            // make the last child have no children
             List<TreeNode> list = new();
 
             inorder(root);
 
-            TreeNode newRoot = list[0];
-            TreeNode pointer = newRoot;
-
-            //sets newroot as the anchor while pointer is the new node thats just addede to the tree
             for(int i = 1; i < list.Count; i++) {
-                pointer.right = list[i];
-                pointer.left = null;
-                pointer = pointer.right;
-
+                list[i].left = null;
+                list[i].right = list[i];
             }
-            
-            pointer.right = null;
 
-            return newRoot;
+            list[list.Count -1].left = null;
+            list[list.Count -1].right = null;
+
+            return list[0];
 
 
             void inorder(TreeNode node) {
